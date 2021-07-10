@@ -7,7 +7,38 @@ object Main {
 
   def main(args:Array[String]){
 
-    val conf = new SparkConf().setAppName("FPGrowthTest")
+    var spark_memory_fraction = "0.7"
+    var spark_memory_storage_Fraction = "0.3"
+    var spark_shuffle_spill_compress = "true"
+    var spark_memory_offHeap_enable = "true"
+    var spark_memory_offHeap_size = "5g"
+
+    var spark_executor_cores_AB = "2"
+    var spark_cores_max_AB = "42"
+
+    var spark_executor_cores_CD = "8"
+    var spark_cores_max_CD = "168"
+    var spark_parallelism_CD = "672"
+
+    var spark_executor_instances = "21"
+    var spark_driver_cores = "24"
+    var spark_driver_memory = "20g"
+    var spark_executor_memory_AB = "20g"
+    var spark_executor_memory_CD = "20g"
+
+    val conf = new SparkConf().setAppName("FPGrowth")
+    conf.set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
+    conf.set("spark.memory.fraction", myConf.spark_memory_fraction)
+    conf.set("spark.memory.storageFraction", myConf.spark_memory_storage_Fraction)
+    conf.set("spark.shuffle.spill.compress", myConf.spark_shuffle_spill_compress)
+    conf.set("spark.memory.offHeap.enable", myConf.spark_memory_offHeap_enable)
+    conf.set("spark.memory.offHeap.size", myConf.spark_memory_offHeap_size)
+    conf.set("spark.executor.memory", myConf.spark_executor_memory_AB)
+    conf.set("spark.driver.cores", myConf.spark_driver_cores)
+    conf.set("spark.driver.memory", myConf.spark_driver_memory)
+    conf.set("spark.executor.instances", myConf.spark_executor_instances)
+    conf.set("spark.cores.max", myConf.spark_cores_max_AB)
+    conf.set("spark.executor.cores", myConf.spark_executor_cores_AB)
     val sc = new SparkContext(conf)
 
     val input_path=args(0)
