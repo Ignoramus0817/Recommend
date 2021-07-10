@@ -22,9 +22,9 @@ object Main {
 
     var spark_executor_instances = "21"
     var spark_driver_cores = "24"
-    var spark_driver_memory = "20g"
-    var spark_executor_memory_AB = "20g"
-    var spark_executor_memory_CD = "20g"
+    var spark_driver_memory = "2g"
+    var spark_executor_memory_AB = "2g"
+    var spark_executor_memory_CD = "2g"
 
     val conf = new SparkConf().setAppName("FPGrowth")
     conf.set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
