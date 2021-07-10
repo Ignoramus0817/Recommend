@@ -17,16 +17,16 @@ object Main {
     //最小置信度
     val minConfidence=0.8
     //数据分区
-    val numPartitions=2
+    val numPartitions=336
 
 
     //取出数据
-    val data_D = sc.textFile(input_path + "/D.dat")
+    val data_D = sc.textFile(input_path + "/D.dat", numPartitions)
     // val data_U = sc.textFile(input_path + "/U.dat")
     //把数据通过空格分割
     val purchase = data_D.map(x=>x.split(" "))
     // val user = data_U.map(x=>x.split(" "))
-    purchase.cache()
+    // purchase.cache()
     // user.cache()
 
     //创建一个FPGrowth的算法实列
