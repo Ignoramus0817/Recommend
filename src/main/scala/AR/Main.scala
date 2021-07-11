@@ -91,19 +91,19 @@ object Main {
       var goodFreq = 0L
       for(goods <- freqItems){
         if(goods.items.mkString == user.mkString){
-          goodsFreq = goods.Freq
+          goodFreq = goods.Freq
         }
       }
       var preConf = 0D
       var rec = "0"
       for(f <- freqItems){
         if(f.items.mkString.contains(user.mkString) && f.items.size > user.size){
-          var conf:Double = f.freq.toDouble / goodsFreq.toDouble
+          var conf:Double = f.freq.toDouble / goodFreq.toDouble
           if(conf >= preConf) {
             preConf = conf
             var item = f.items
             for(i <- 0 until user.size){
-              item = item.filter(_ != usr(i)) 
+              item = item.filter(_ != user(i)) 
             }
             rec = item.mkString(" ")
           }
