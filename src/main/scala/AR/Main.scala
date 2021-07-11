@@ -55,7 +55,7 @@ object Main {
 
     //取出数据
     val data_D = sc.textFile(input_path + "/D.dat", numPartitions)
-    // val data_U = sc.textFile(input_path + "/U.dat")
+    val data_U = sc.textFile(input_path + "/U.dat")
     //把数据通过空格分割
     val purchase = data_D.map(x=>x.split(" "))
     val users = data_U.map(x=>x.split(" "))
