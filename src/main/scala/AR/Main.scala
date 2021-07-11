@@ -23,8 +23,8 @@ object Main {
     var spark_executor_instances = "21"
     var spark_driver_cores = "24"
     var spark_driver_memory = "2g"
-    var spark_executor_memory_AB = "2g"
-    var spark_executor_memory_CD = "2g"
+    var spark_executor_memory_AB = "3g"
+    var spark_executor_memory_CD = "3g"
 
     val conf = new SparkConf().setAppName("FPGrowth")
     conf.set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
@@ -48,7 +48,7 @@ object Main {
     //最小置信度
     val minConfidence=0.8
     //数据分区
-    val numPartitions=336
+    val numPartitions=50
 
 
     //取出数据
