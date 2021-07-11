@@ -91,7 +91,7 @@ object Main {
       var goodFreq = 0L
       for(goods <- freqItems){
         if(goods.items.mkString == user.mkString){
-          goodFreq = goods.Freq
+          goodFreq = goods.freq
         }
       }
       var preConf = 0D
