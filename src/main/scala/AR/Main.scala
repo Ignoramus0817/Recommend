@@ -3,6 +3,8 @@ package AR
 import org.apache.spark.mllib.fpm.FPGrowth
 import org.apache.spark.{SparkConf, SparkContext}
 
+import scala.collection.mutable.ListBuffer
+
 object Main {
 
   def main(args:Array[String]){
@@ -48,7 +50,7 @@ object Main {
     //最小置信度
     val minConfidence=0.8
     //数据分区
-    val numPartitions=50
+    val numPartitions=336
 
 
     //取出数据
@@ -56,7 +58,7 @@ object Main {
     // val data_U = sc.textFile(input_path + "/U.dat")
     //把数据通过空格分割
     val purchase = data_D.map(x=>x.split(" "))
-    // val user = data_U.map(x=>x.split(" "))
+    val users = data_U.map(x=>x.split(" "))
     // purchase.cache()
     // user.cache()
 
@@ -70,12 +72,44 @@ object Main {
     val model = fpg.run(purchase)
 
     //查看所有的频繁项集，并且列出它出现的次数
+    model.freqItemsets.persist(StorageLevel.MEMORY_AND_DISK_SER)
     model.freqItemsets.saveAsTextFile(output_path + "/Freq")
+    freqItems = model.freqItemsets.collect()
 
     //通过置信度筛选出推荐规则则
     //antecedent表示前项
     //consequent表示后项
     //confidence表示规则的置信度
     model.generateAssociationRules(minConfidence).saveAsTextFile(output_path + "/Rules")
+
+    //根据用户数据推荐商品
+    val userList = users.collect()
+    val recList = ListBuffer[String]()
+    for(user <- userList){
+      var goodFreq = 0L
+      for(goods <- freqItems){
+        if(goods.items.mkString == user.mkString){
+          goodsFreq = goods.Freq
+        }
+      }
+      var preConf = 0L
+      var rec = "0"
+      for(f <- freqItems){
+        if(f.items.mkString.contains(user.mkString) && f.items.size > user.size){
+          var conf:Double = f.freq.toDouble / goodsFreq.toDouble
+          if(conf >= preConf) {
+            preConf = conf
+            var item = f.items
+            for(i <- 0 until user.size){
+              item = item.filter(_ != usr(i)) 
+            }
+            rec = item.mkString(" ")
+          }
+        }
+      }
+      recList += rec
+    }
+    sc.parallelize(recList).saveAsTextFile(output_path + "/Rec")
   }
+
 }
