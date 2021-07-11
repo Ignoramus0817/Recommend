@@ -25,7 +25,7 @@ object Main {
 
     var spark_executor_instances = "21"
     var spark_driver_cores = "24"
-    var spark_driver_memory = "2g"
+    var spark_driver_memory = "3g"
     var spark_executor_memory_AB = "3g"
     var spark_executor_memory_CD = "3g"
 
@@ -46,6 +46,7 @@ object Main {
 
     val input_path=args(0)
     val output_path=args(1)
+
     //最小支持度
     val minSupport=0.092
     //最小置信度
