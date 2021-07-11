@@ -51,7 +51,7 @@ object Main {
     //最小置信度
     val minConfidence=0.8
     //数据分区
-    val numPartitions=336
+    val numPartitions=3
 
 
     //取出数据
