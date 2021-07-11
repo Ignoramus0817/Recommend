@@ -94,7 +94,7 @@ object Main {
           goodsFreq = goods.Freq
         }
       }
-      var preConf = 0L
+      var preConf = 0D
       var rec = "0"
       for(f <- freqItems){
         if(f.items.mkString.contains(user.mkString) && f.items.size > user.size){
