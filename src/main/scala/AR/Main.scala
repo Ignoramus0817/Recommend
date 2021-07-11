@@ -2,6 +2,7 @@ package AR
 
 import org.apache.spark.mllib.fpm.FPGrowth
 import org.apache.spark.{SparkConf, SparkContext}
+import org.apache.spark.storage.StorageLevel
 
 import scala.collection.mutable.ListBuffer
 
@@ -75,7 +76,7 @@ object Main {
     //查看所有的频繁项集，并且列出它出现的次数
     model.freqItemsets.persist(StorageLevel.MEMORY_AND_DISK_SER)
     model.freqItemsets.saveAsTextFile(output_path + "/Freq")
-    freqItems = model.freqItemsets.collect()
+    val freqItems = model.freqItemsets.collect()
 
     //通过置信度筛选出推荐规则则
     //antecedent表示前项
