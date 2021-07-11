@@ -51,7 +51,7 @@ object Main {
     //最小置信度
     val minConfidence=0.8
     //数据分区
-    val numPartitions=3
+    val numPartitions=336
 
 
     //取出数据
@@ -60,7 +60,6 @@ object Main {
     //把数据通过空格分割
     val purchase = data_D.map(x=>x.split(" "))
     val users = data_U.map(x=>x.split(" "))
-    users.persist(StorageLevel.MEMORY_AND_DISK_SER)
     // purchase.cache()
     // user.cache()
 
